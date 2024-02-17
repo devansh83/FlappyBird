@@ -9,9 +9,32 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverCanvas;
 
     public GameObject medals;
+    public GameObject pauseMenu;
 
     public TextMeshProUGUI currentscoreText;
     public AudioSource audioSource;
+    public AudioSource pauseAudioSource;
+    bool isPaused = false;
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0f : 1f;
+            pauseMenu.SetActive(isPaused);
+            if (isPaused)
+            {
+                audioSource.Pause();
+                //play a short sound effect for pause
+                pauseAudioSource.Play();
+            }
+            else
+            {
+                audioSource.Play();
+            }
+        }
+
+    }
     void Awake()
     {
         if (instance == null)
